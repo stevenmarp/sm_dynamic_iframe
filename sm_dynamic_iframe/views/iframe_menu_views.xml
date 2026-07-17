@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="sm_iframe_menu_view_list" model="ir.ui.view">
+        <field name="name">sm.iframe.menu.list</field>
+        <field name="model">sm.iframe.menu</field>
+        <field name="arch" type="xml">
+            <tree string="Iframe Menus">
+                <field name="name"/>
+                <field name="url"/>
+                <field name="parent_menu_id"/>
+                <field name="company_id"/>
+            </tree>
+        </field>
+    </record>
+
+    <record id="sm_iframe_menu_view_form" model="ir.ui.view">
+        <field name="name">sm.iframe.menu.form</field>
+        <field name="model">sm.iframe.menu</field>
+        <field name="arch" type="xml">
+            <form string="Iframe Menu">
+                <sheet>
+                    <group>
+                        <field name="name"/>
+                        <field name="url" placeholder="https://example.com"/>
+                        <field name="parent_menu_id"/>
+                        <field name="company_id"/>
+                        <field name="icon_image" widget="image" class="oe_avatar" attrs="{'invisible': [('parent_menu_id', '!=', False)]}"/>
+                        <field name="sequence" attrs="{'invisible': [('parent_menu_id', '=', False)]}"/>
+                    </group>
+                    <group string="Generated" groups="base.group_no_one">
+                        <field name="menu_id"/>
+                        <field name="action_id"/>
+                    </group>
+                    <div class="alert alert-info" role="status">
+                        Refresh the browser after creating or editing an entry for the menu to appear.
+                    </div>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+    <record id="action_sm_iframe_menu" model="ir.actions.act_window">
+        <field name="name">Iframe Menus</field>
+        <field name="res_model">sm.iframe.menu</field>
+        <field name="view_mode">tree,form</field>
+    </record>
+
+    <menuitem id="menu_sm_iframe_root" name="Iframe Menus"
+              web_icon="sm_dynamic_iframe,static/description/icon.png"
+              sequence="200"/>
+    <menuitem id="menu_sm_iframe_config" name="Configuration"
+              parent="menu_sm_iframe_root" sequence="10"/>
+    <menuitem id="menu_sm_iframe_menu_action" name="Iframe Menus"
+              parent="menu_sm_iframe_config" action="action_sm_iframe_menu" sequence="10"/>
+</odoo>
